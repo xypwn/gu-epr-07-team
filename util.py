@@ -1,3 +1,5 @@
+__author__ = "8030456, Schuppan, 8404886, Kraus"
+
 def column_align(rows: list[list[str]], sep: str = " ", pad: str = " ") -> str:
     """Column-aligns all cells in the given list.
 

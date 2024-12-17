@@ -1,4 +1,4 @@
-__author__ = "8030456, Schuppan"
+__author__ = "8030456, Schuppan, 8404886, Kraus"
 
 from dataclasses import dataclass, field
 from datetime import datetime
