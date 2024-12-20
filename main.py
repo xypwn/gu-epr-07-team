@@ -207,7 +207,7 @@ table {curr_table.id}."
                 for req in special_requests:
                     print(f" * {req.request} ({req.charge/100} EUR)")
             print("Options:")
-            print("  y: Confirm")
+            print("  y: Confirm (default)")
             print("  n: Cancel")
             print("  s: Add special request")
             sel = input("Selection [Yns]: ").lower()
@@ -226,9 +226,12 @@ table {curr_table.id}."
                 break
             elif sel == "s":
                 req = input("Special request: ")
+                print("Charge for 1 EUR for special request?")
+                print("  y: Confirm")
+                print("  n: Cancel (default)")
                 charge = (
                     input(
-                        "Charge for 1 EUR for special request? [yN]: "
+                        "Selection [yN]: "
                     ).lower()
                     == "y"
                 )
@@ -288,24 +291,26 @@ to list orders.'
             print(f"No orders for table {curr_table.id}.")
             return
 
-        invoice = f"Table: {curr_table.id}\n"
+        invoice = ""
         invoice += f"Time: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n"
+        invoice += f"Table: {curr_table.id}\n"
         invoice += "Orders:\n"
         invoice += curr_table.format_orders()
         print(invoice)
-        sel = input(
-            f"Delete table {curr_table.id} and save invoice to file? [yN]: "
-        ).lower()
+        print(f"Delete table {curr_table.id} and save invoice to file?")
+        print("  y: Confirm")
+        print("  n: Cancel (default)")
+        sel = input( "Selection [yN]: ").lower()
         if sel == "y":
             FILENAME = "invoices.txt"
             with open(FILENAME, "a") as f:
                 f.write(invoice + "\n")
             del self.tables[self.curr_table]
             self.curr_table = None
+            self.set_prompt_prefix([])
             print(
                 f"Saved table {curr_table.id}'s orders to {FILENAME} and deleted the table from memory."
             )
-
         else:
             return
 
