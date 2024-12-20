@@ -227,7 +227,9 @@ table {curr_table.id}."
             elif sel == "s":
                 req = input("Special request: ")
                 charge = (
-                    input("Charge for 1 EUR for special request? [yN]: ").lower()
+                    input(
+                        "Charge for 1 EUR for special request? [yN]: "
+                    ).lower()
                     == "y"
                 )
                 special_requests.append(
@@ -249,7 +251,7 @@ table {curr_table.id}."
             return
 
         print(f"Orders for table {curr_table.id}:")
-        print(curr_table.orders(), end='')
+        print(curr_table.orders(), end="")
 
     def cmd_rescind(self, params: list[object]) -> None:
         """Rescinds an existing order."""
@@ -291,14 +293,18 @@ to list orders.'
         invoice += "Orders:\n"
         invoice += curr_table.orders()
         print(invoice)
-        sel = input(f"Delete table {curr_table.id} and save invoice to file? [yN]: ").lower()
+        sel = input(
+            f"Delete table {curr_table.id} and save invoice to file? [yN]: "
+        ).lower()
         if sel == "y":
             FILENAME = "invoices.txt"
             with open(FILENAME, "a") as f:
-                f.write(invoice+"\n")
+                f.write(invoice + "\n")
             del self.tables[self.curr_table]
             self.curr_table = None
-            print(f"Saved table {curr_table.id}'s orders to {FILENAME} and deleted the table from memory.")
+            print(
+                f"Saved table {curr_table.id}'s orders to {FILENAME} and deleted the table from memory."
+            )
 
         else:
             return

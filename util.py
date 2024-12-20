@@ -1,8 +1,12 @@
 __author__ = "8030456, Schuppan, 8404886, Kraus"
 
+
 class Util:
     """This has no reason to be a class."""
-    def column_align(rows: list[list[str]], sep: str = " ", pad: str = " ") -> str:
+
+    def column_align(
+        rows: list[list[str]], sep: str = " ", pad: str = " "
+    ) -> str:
         """Column-aligns all cells in the given list.
 
         >>> print(column_align([["a", "abc"], ["abc", "a"]]))
@@ -27,7 +31,9 @@ class Util:
             # For each set of cells in a column, get the length of the largest
             # cell.
             max(
-                len(rows[row_idx][col_idx]) if col_idx < len(rows[row_idx]) else 0
+                len(rows[row_idx][col_idx])
+                if col_idx < len(rows[row_idx])
+                else 0
                 for row_idx in range(len(rows))
             )
             for col_idx in range(max_cols)
