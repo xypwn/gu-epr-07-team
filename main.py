@@ -9,6 +9,7 @@ from util import Util
 
 @dataclass
 class FoodItem:
+    """Set up the attributes for the individual Food Object"""
     name: str
     type: str
     categories: set[str]
@@ -16,6 +17,7 @@ class FoodItem:
 
 
 class FoodItems:
+    """Creates Food based on food.csv and class FoodItem"""
     def __init__(self, filename: str):
         self.__items = []
         with open(filename, "r") as file:
@@ -59,12 +61,14 @@ class FoodItems:
 
 @dataclass
 class SpecialRequest:
+    """Set up the attributes for a request"""
     request: str
     charge: int  # In cents.
 
 
 @dataclass
 class Order:
+    """Set up the attributes for an order"""
     time: datetime
     food_item: FoodItem
     special_requests: list[SpecialRequest]
@@ -89,6 +93,7 @@ class Rescindment:
 
 @dataclass
 class Table:
+    """Creates a table with the matching orders"""
     id: str
     orders: list[Order | Rescindment] = field(default_factory=list)
 
