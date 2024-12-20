@@ -6,7 +6,7 @@
 
 ## TODO
 - [x] Functional implementation
-- [ ] Docstrings everywhere (nearly everywhere)
+- [ ] Docstrings everywhere (nearly done)
 - [ ] Tests
 - [ ] Documentation
     - [x] User manual
