@@ -126,8 +126,8 @@ def run():
     app = App("food.csv")
 
     def cmd_table(self, params: list[object]) -> None:
-        """ Creates a new table and return it. Also checks if
-            the table already exist"""
+        """Switches to a table with the specified ID. Creates
+        a new table if necessary."""
         table = params[0]
         if (
             self.curr_table is not None
@@ -145,7 +145,8 @@ def run():
         self.set_prompt_prefix([f"table={table}"])
 
     def cmd_tables(self, params: list[object]) -> None:
-        """Returns a list of all existing tables"""
+        """Lists all existing tables and their current orders
+        and total amounts."""
         if len(self.tables) == 0:
             print("No tables.")
         else:
@@ -165,6 +166,7 @@ def run():
             print(Util.column_align(rows, sep="  "))
 
     def cmd_list(self, params: list[object]) -> None:
+        """Lists all food items."""
         print("Food items:")
         rows = [["No.", "Name", "Type", "Tags", "Price"]]
         for i, item in enumerate(self.food_items):
@@ -184,6 +186,9 @@ def run():
         print(Util.column_align(rows, sep="  "))
 
     def cmd_order(self, params: list[object]) -> None:
+        """Places an order for the current table. Allows
+        for specifying a special request, which can be specified
+        to optionally add a 1 EUR charge or not."""
         if self.curr_table is None or self.tables[self.curr_table] is None:
             print("Must select a table before placing an order.")
             print('Use the "table" command to create/select a table.')
@@ -233,6 +238,7 @@ table {curr_table.id}."
             print()
 
     def cmd_orders(self, params: list[object]) -> None:
+        """Lists the current table's orders and the total amount."""
         if self.curr_table is None or self.tables[self.curr_table] is None:
             print("No table selected.")
             return
@@ -246,6 +252,7 @@ table {curr_table.id}."
         print(curr_table.orders(), end='')
 
     def cmd_rescind(self, params: list[object]) -> None:
+        """Rescinds an existing order."""
         if self.curr_table is None or self.tables[self.curr_table] is None:
             print("No table selected.")
             return
@@ -269,6 +276,7 @@ to list orders.'
 ({order.food_item.name}) for {order.amount()/100}€.")
 
     def cmd_invoice(self, params: list[object]):
+        """Finalize an order, creating an invoice and writing it to a file."""
         if self.curr_table is None or self.tables[self.curr_table] is None:
             print("No table selected.")
             return
