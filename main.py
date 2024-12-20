@@ -229,12 +229,7 @@ table {curr_table.id}."
                 print("Charge for 1 EUR for special request?")
                 print("  y: Confirm")
                 print("  n: Cancel (default)")
-                charge = (
-                    input(
-                        "Selection [yN]: "
-                    ).lower()
-                    == "y"
-                )
+                charge = input("Selection [yN]: ").lower() == "y"
                 special_requests.append(
                     SpecialRequest(req, 100 if charge else 0)
                 )
@@ -300,7 +295,7 @@ to list orders.'
         print(f"Delete table {curr_table.id} and save invoice to file?")
         print("  y: Confirm")
         print("  n: Cancel (default)")
-        sel = input( "Selection [yN]: ").lower()
+        sel = input("Selection [yN]: ").lower()
         if sel == "y":
             FILENAME = "invoices.txt"
             with open(FILENAME, "a") as f:
