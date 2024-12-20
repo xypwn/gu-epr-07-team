@@ -120,6 +120,7 @@ class Table:
 
 
 class App(shell.Shell):
+    """Creates App as part of Shell"""
     def __init__(self, food_items_filename):
         super().__init__()
         self.food_items = FoodItems(food_items_filename)
@@ -128,6 +129,7 @@ class App(shell.Shell):
 
 
 def run():
+    """Use to run the full project"""
     app = App("food.csv")
 
     def cmd_table(self, params: list[object]) -> None:
