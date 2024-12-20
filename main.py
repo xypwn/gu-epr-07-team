@@ -126,6 +126,8 @@ def run():
     app = App("food.csv")
 
     def cmd_table(self, params: list[object]) -> None:
+        """ Creates a new table and return it. Also checks if
+            the table already exist"""
         table = params[0]
         if (
             self.curr_table is not None
@@ -143,6 +145,7 @@ def run():
         self.set_prompt_prefix([f"table={table}"])
 
     def cmd_tables(self, params: list[object]) -> None:
+        """Returns a list of all existing tables"""
         if len(self.tables) == 0:
             print("No tables.")
         else:
