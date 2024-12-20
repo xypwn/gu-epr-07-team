@@ -9,7 +9,7 @@
 - [ ] Docstrings everywhere
 - [ ] Tests
 - [ ] Documentation
-    - [ ] User manual
+    - [x] User manual
     - [ ] High-level implementation description
     - [ ] UML class diagram
     - [ ] Test case explanation
