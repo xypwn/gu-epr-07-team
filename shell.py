@@ -9,16 +9,22 @@ from util import Util
 
 
 class Param(ABC):
+    """Abstract class for parameter"""
     @abstractmethod
     def optional() -> bool:
+        """Cheking if the Parameter is optional
+            True -> optional,
+            False -> not optional"""
         pass
 
     @abstractmethod
     def name(self) -> str:
+        """Returns the name of the Parameter"""
         pass
 
     @abstractmethod
     def constraints(self) -> str:
+        """Retruns contraints for the Parameter"""
         pass
 
     @abstractmethod
@@ -27,14 +33,18 @@ class Param(ABC):
 
 
 class StringParam(Param):
+    """Class to handle string parameters.
+       Inherits from the Class Param"""
     def __init__(self, name: str, optional: bool = False) -> None:
         self.__name = name
         self.__optional = optional
 
     def optional(self) -> str:
+        """Returns if the string parameter is optional"""
         return self.__optional
 
     def name(self) -> str:
+        """Returns the name of the string parameter"""
         return self.__name
 
     def constraints(self):
@@ -45,6 +55,8 @@ class StringParam(Param):
 
 
 class IntParam(Param):
+    """Class to handle Integer parameter.
+       Inherits from the class Param."""
     def __init__(
         self,
         name: str,
@@ -58,12 +70,17 @@ class IntParam(Param):
         self.__max = max
 
     def optional(self) -> str:
+        """Returns if the Integer parameter is optional"""
         return self.__optional
 
     def name(self) -> str:
+        """Returns the name of the Integer parameter
+           True -> is optional
+           False -> is not optional"""
         return self.__name
 
     def constraints(self) -> str:
+        """Returns min and/or max values of the Integer"""
         res = "int"
         if self.__min is not None:
             res += f" from {self.__min}"
@@ -72,6 +89,9 @@ class IntParam(Param):
         return res
 
     def parse(self, val: str) -> float:
+        """Check the input with using the constraints
+           Returns the correct number as float or
+           Returns a Error to tell the mistake"""
         i = 0
         try:
             i = int(val)
