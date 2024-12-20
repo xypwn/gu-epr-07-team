@@ -96,7 +96,7 @@ class Table:
         """Returns the total amount in cents."""
         return sum(o.amount() for o in self.orders)
 
-    def orders(self) -> str:
+    def format_orders(self) -> str:
         res = ""
         for i, order in enumerate(self.orders):
             if isinstance(order, Order):
@@ -251,7 +251,7 @@ table {curr_table.id}."
             return
 
         print(f"Orders for table {curr_table.id}:")
-        print(curr_table.orders(), end="")
+        print(curr_table.format_orders(), end="")
 
     def cmd_rescind(self, params: list[object]) -> None:
         """Rescinds an existing order."""
@@ -291,7 +291,7 @@ to list orders.'
         invoice = f"Table: {curr_table.id}\n"
         invoice += f"Time: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n"
         invoice += "Orders:\n"
-        invoice += curr_table.orders()
+        invoice += curr_table.format_orders()
         print(invoice)
         sel = input(
             f"Delete table {curr_table.id} and save invoice to file? [yN]: "
