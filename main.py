@@ -101,16 +101,16 @@ class Table:
         for i, order in enumerate(self.orders):
             if isinstance(order, Order):
                 res += f" {i+1}. {order.food_item.name} \
-+{order.food_item.price/100}€\n"
++{order.food_item.price/100} EUR\n"
                 for req in order.special_requests:
                     res += f"  + {req.request} \
-({req.charge/100}€)\n"
+({req.charge/100} EUR)\n"
             elif isinstance(order, Rescindment):
                 res += f" {i+1}. Rescind order no. \
-{order.item_id+1} -{order.price/100}€\n"
+{order.item_id+1} -{order.price/100} EUR\n"
             else:
                 raise ValueError
-        res += f"Total: {self.amount()/100}€\n"
+        res += f"Total: {self.amount()/100} EUR\n"
         return res
 
 
@@ -160,7 +160,7 @@ def run():
                     [
                         f" * {name}",
                         f"{orders} order{plural}",
-                        f"{table.amount()/100}€",
+                        f"{table.amount()/100} EUR",
                     ]
                 )
             print(Util.column_align(rows, sep="  "))
@@ -180,7 +180,7 @@ def run():
                     item.name,
                     item.type,
                     ",".join(item.categories),
-                    f"{item.price/100}€",
+                    f"{item.price/100} EUR",
                 ]
             )
         print(Util.column_align(rows, sep="  "))
@@ -205,7 +205,7 @@ table {curr_table.id}."
             if len(special_requests) > 0:
                 print("Special requests:")
                 for req in special_requests:
-                    print(f" * {req.request} ({req.charge/100}€)")
+                    print(f" * {req.request} ({req.charge/100} EUR)")
             print("Options:")
             print("  y: Confirm")
             print("  n: Cancel")
@@ -227,7 +227,7 @@ table {curr_table.id}."
             elif sel == "s":
                 req = input("Special request: ")
                 charge = (
-                    input("Charge for 1€ for special request? [yN]: ").lower()
+                    input("Charge for 1 EUR for special request? [yN]: ").lower()
                     == "y"
                 )
                 special_requests.append(
@@ -273,7 +273,7 @@ to list orders.'
             Rescindment(datetime.now(), order_id, order.amount())
         )
         print(f"Rescinded order {order_id+1} \
-({order.food_item.name}) for {order.amount()/100}€.")
+({order.food_item.name}) for {order.amount()/100} EUR.")
 
     def cmd_invoice(self, params: list[object]):
         """Finalize an order, creating an invoice and writing it to a file."""
