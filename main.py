@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 
 import shell
-import util
+from util import Util
 
 
 @dataclass
@@ -96,6 +96,8 @@ class Table:
         """Returns the total amount in cents."""
         return sum(o.amount() for o in self.orders)
 
+    def orders(self) -> str:
+        res = ""
         for i, order in enumerate(self.orders):
             if isinstance(order, Order):
                 res += f" {i+1}. {order.food_item.name} \
@@ -103,6 +105,8 @@ class Table:
                 for req in order.special_requests:
                     res += f"  + {req.request} \
 ({req.charge/100}€)\n"
+            elif isinstance(order, Rescindment):
+                res += f" {i+1}. Rescind order no. \
 {order.item_id+1} -{order.price/100}€\n"
             else:
                 raise ValueError
@@ -155,7 +159,7 @@ def run():
                         f"{table.amount()/100}€",
                     ]
                 )
-            print(util.column_align(rows, sep="  "))
+            print(Util.column_align(rows, sep="  "))
 
     def cmd_list(self, params: list[object]) -> None:
         print("Food items:")
@@ -174,7 +178,7 @@ def run():
                     f"{item.price/100}€",
                 ]
             )
-        print(util.column_align(rows, sep="  "))
+        print(Util.column_align(rows, sep="  "))
 
     def cmd_order(self, params: list[object]) -> None:
         if self.curr_table is None or self.tables[self.curr_table] is None:

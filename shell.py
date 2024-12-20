@@ -5,7 +5,7 @@ from enum import Enum
 from typing import Callable
 from abc import ABC, abstractmethod
 
-import util
+from util import Util
 
 
 class Param(ABC):
@@ -150,7 +150,7 @@ class Shell:
             "Commands:",
         ]
 
-        return "\n".join(prolog) + "\n" + util.column_align(rows, sep=" - ")
+        return "\n".join(prolog) + "\n" + Util.column_align(rows, sep=" - ")
 
     def set_prompt_prefix(self, elems: list[str]) -> None:
         """Sets the prefix words which will be printed
