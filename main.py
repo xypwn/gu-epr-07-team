@@ -96,6 +96,19 @@ class Table:
         """Returns the total amount in cents."""
         return sum(o.amount() for o in self.orders)
 
+        for i, order in enumerate(self.orders):
+            if isinstance(order, Order):
+                res += f" {i+1}. {order.food_item.name} \
++{order.food_item.price/100}€\n"
+                for req in order.special_requests:
+                    res += f"  + {req.request} \
+({req.charge/100}€)\n"
+{order.item_id+1} -{order.price/100}€\n"
+            else:
+                raise ValueError
+        res += f"Total: {self.amount()/100}€\n"
+        return res
+
 
 class App(shell.Shell):
     def __init__(self, food_items_filename):
@@ -223,19 +236,7 @@ table {curr_table.id}."
             return
 
         print(f"Orders for table {curr_table.id}:")
-        for i, order in enumerate(curr_table.orders):
-            if isinstance(order, Order):
-                print(f" {i+1}. {order.food_item.name} \
-+{order.food_item.price/100}€")
-                for req in order.special_requests:
-                    print(f"  + {req.request} \
-({req.charge/100}€)")
-            elif isinstance(order, Rescindment):
-                print(f" {i+1}. Rescind order no. \
-{order.item_id+1} -{order.price/100}€")
-            else:
-                raise ValueError
-        print(f"Total: {curr_table.amount()/100}€")
+        print(curr_table.orders(), end='')
 
     def cmd_rescind(self, params: list[object]) -> None:
         if self.curr_table is None or self.tables[self.curr_table] is None:
@@ -259,6 +260,33 @@ to list orders.'
         )
         print(f"Rescinded order {order_id+1} \
 ({order.food_item.name}) for {order.amount()/100}€.")
+
+    def cmd_invoice(self, params: list[object]):
+        if self.curr_table is None or self.tables[self.curr_table] is None:
+            print("No table selected.")
+            return
+        curr_table = self.tables[self.curr_table]
+
+        if len(curr_table.orders) == 0:
+            print(f"No orders for table {curr_table.id}.")
+            return
+
+        invoice = f"Table: {curr_table.id}\n"
+        invoice += f"Time: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n"
+        invoice += "Orders:\n"
+        invoice += curr_table.orders()
+        print(invoice)
+        sel = input(f"Delete table {curr_table.id} and save invoice to file? [yN]: ").lower()
+        if sel == "y":
+            FILENAME = "invoices.txt"
+            with open(FILENAME, "a") as f:
+                f.write(invoice+"\n")
+            del self.tables[self.curr_table]
+            self.curr_table = None
+            print(f"Saved table {curr_table.id}'s orders to {FILENAME} and deleted the table from memory.")
+
+        else:
+            return
 
     app.add_command(
         shell.Command(
@@ -305,6 +333,14 @@ to list orders.'
             "rescind one of the current table's orders",
             [shell.IntParam("order_id", min=1)],
             cmd_rescind,
+        )
+    )
+    app.add_command(
+        shell.Command(
+            "invoice",
+            "finalize the current table's orders and generate/save invoice",
+            [],
+            cmd_invoice,
         )
     )
 
