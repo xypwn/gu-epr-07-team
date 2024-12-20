@@ -1,13 +1,13 @@
 name;type;category;price
-Vunky Burger;main;vegan;12
-Falafel Burger;main;vegan;13
-Classic Burger;main;beef;9
-Cheese Burger;main;beef;10
-Forest Burger;main;veggie;12
-Chili Burger;main;beef, hot;12,5
-Pizza Margarita;main;vegan;9
-Pizza Hawai;main;pork;10
-Pizza Mozaarella;main;vegan;10
+Vunky-Burger;main;vegan;12
+Falafel-Burger;main;vegan;13
+Classic-Burger;main;beef;9
+Cheeseburger;main;beef;10
+Forest-Burger;main;veggie;12
+Chili-Burger;main;beef, hot;12,5
+Pizza Margherita;main;vegan;9
+Pizza Hawaii;main;pork;10
+Pizza Mozarella;main;vegan;10
 Wasser (0.3);drink;alcohol-free;2
 Wasser (0.5);drink;alcohol-free;3,5
 Cola (0.4);drink;alcohol-free;3,5
